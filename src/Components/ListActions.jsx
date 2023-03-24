@@ -1,75 +1,65 @@
 import React, {
   useState,
   useEffect,
-  useCallback,
   useMemo,
   useRef,
+  useContext,
 } from "react";
 import { actions as dataact } from "../data/actions";
 import ButtonsActions from "./AddButtons";
 import { Link } from "react-router-dom";
 import TitlePage from "./TitlePage";
 import Help from "./Help";
-import SERVER_URL from "../config.js";
 import "./styles.css";
+import { SensorContext } from "../App.jsx";
 
-//obtengo las opciones disponibles del arreglo de objeto "actions.js".
-const actions = dataact.map((action) => {
-  return {
-    ...action,
-    element: (
-      <div
-        key={action.id}
-        className={`bg-gray-200 rounded-md p-4 mx-auto shadow-md shadow-gray-500/50`}
-      >
-        <img
-          src={action.images}
-          alt={action.name}
-          className="h-48 w-auto mx-auto"
-        />
-        <Link to={`/action/${action.id}`}>
-          <ButtonsActions actionName={action.name} actionVoz={action.voz} />
-        </Link>
-      </div>
-    ),
-  };
-});
 
-function ListActions() {
+function ListActions(props) {
+
   //const [actions, setActions] = useState([]);
-  const [sensorData, setSensorData] = useState({});
+  const { sensorData } = useContext(SensorContext);
   const [selectedOption, setSelectedOption] = useState(0);
   const lastSelectedOption = useRef(0);
-  const [isLoading, setIsLoading] = useState(false);
 
-  // setActions(dataact);
+
+    //obtengo las opciones disponibles del arreglo de objeto "actions.js".
+    const actions = dataact.map((action, index) => {
+      return {
+        ...action,
+        element: (
+          <div
+            key={action.id}
+            className={`bg-gray-200 rounded-md p-4 mx-auto shadow-md shadow-gray-500/50`}
+          >
+            <img
+              src={action.images}
+              alt={action.name}
+              className="h-48 w-auto mx-auto"
+            />
+            <Link to={`/action/${action.id}`}>
+              <ButtonsActions actionName={action.name} actionVoz={action.voz}/>
+            </Link>
+          </div>
+        ),
+      };
+    });
+
+
 
   //funcion para ir actualizando los datos que van llegando y realizar el movimiento por la interfaz
-  const handleSensorData = (data) => {
+  useEffect(() => {
     let newSelectedOption;
-    setSensorData(data); //actualizo el objeto data
-    if (data.value >= 50 && data.value <= 70) {
+    if (sensorData.value >= 50 && sensorData.value <= 70) {
       newSelectedOption = (selectedOption + 1) % actions.length;
-    } else {
+    }
+
+    else {
       newSelectedOption = selectedOption;
     }
-    setSelectedOption(newSelectedOption);
-  };
-
-  //Obtener los valores del sensor muscular. cada 500ms 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsLoading(true);
-      fetch(`${SERVER_URL}/datos`)
-        .then((response) => response.json())
-        .then((data) => {
-          setIsLoading(false);
-          handleSensorData(data);
-        })
-        .catch((error) => console.error(error));
-    }, 500);
-    return () => clearTimeout(timeoutId);
-  }, [handleSensorData]);
+    if (newSelectedOption !== selectedOption) {
+      setSelectedOption(newSelectedOption);
+    }
+  }, [sensorData.value]);
 
   useEffect(() => {
     console.log("Selected option updated to: ", selectedOption);
@@ -94,6 +84,7 @@ function ListActions() {
                   actionName={action.name}
                   actionVoz={action.voz}
                   isSelected={index === selectedOption}
+                  optionSelect = {selectedOption}
                 />
               </Link>
             </>
@@ -102,7 +93,7 @@ function ListActions() {
       ),
     [actions, selectedOption]
   );
-  
+
   //renderizado
   return (
     <div>

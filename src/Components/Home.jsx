@@ -1,23 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { actions as dataact } from "../data/actions";
 import React from "react";
 import NavButtons from "./NavButtons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TitlePage from "./TitlePage";
 import { FaQuestion } from "react-icons/fa";
 import ImgBack from "../images/back.png";
+import { SensorContext } from "../App.jsx";
+import AddButtons from "./AddButtons.jsx";
 
 function Home() {
   const [actions, setActions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(0);
+  const { sensorData } = useContext(SensorContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setActions(dataact);
-  });
+    if (sensorData.value >= 80) {
+      console.log("click");
+      navigate("/menu");
+    }
+  }, [sensorData.value, navigate]);
 
   return (
     <div className="text-center">
       <div className="py-4">
         <TitlePage nameTitle={"MuscleMover"} />
+      </div>
+      <div className="text-left">
+        <p>Valor sensor: {sensorData.value} </p>
       </div>
       <div className="m-1">
         <p className="leading-relaxed">
@@ -74,7 +86,11 @@ function Home() {
       </div>
       <div className="py-4">
         <Link to={"/menu"}>
-          <NavButtons nameNav={"Menu"} />
+          <AddButtons
+            actionName={"Menu"}
+            id="menu"
+            isSelected={0 === selectedOption}
+          />
         </Link>
       </div>
     </div>
