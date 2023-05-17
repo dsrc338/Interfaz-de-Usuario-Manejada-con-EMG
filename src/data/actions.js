@@ -4,6 +4,7 @@ import imgJugar from "../images/Jugar.png";
 import imgBanio from "../images/Baño.png";
 import imgAsistente from "../images/Asistente.png";
 import imgDormir from "../images/Dormir.png";
+import imgBack from '../images/back.png';
 import imgPan from "../images/Pan.png";
 import imgPlatano from "../images/Platano.png";
 import imgYogur from "../images/Yogur.png";
@@ -26,7 +27,7 @@ export const actions = [
     images: imgComer,
     description: 'Si tienes Hambre o ganas de comer algo, esta es la opción indicada a elegir.',
     voz: 'Yo quiero Comer',
-    tipo: {
+    type: {
       opcion1: {
         id: 0,
         name: 'Pan',
@@ -35,9 +36,9 @@ export const actions = [
       },
       opcion2: {
         id: 1,
-        name: 'Platano',
+        name: 'Plátano',
         images: imgPlatano,
-        voz: 'Yo quiero comer Platano',
+        voz: 'Yo quiero comer Plátano',
       },
       opcion3: {
         id: 2,
@@ -53,7 +54,7 @@ export const actions = [
     images: imgSalir,
     description: 'Si quieres salir a dar un paseo y tomar aire, esta es la opción correcta.',
     voz: 'Yo quiero Pasear',
-    tipo: {
+    type: {
       opcion1: {
         id: 0,
         name: 'Parque',
@@ -80,7 +81,7 @@ export const actions = [
     images: imgJugar,
     description: 'Si quieres jugar y divertirte esta es la opción indicada.',
     voz: 'Yo quiero Jugar',
-    tipo: {
+    type: {
       opcion1: {
         id: 0,
         name: 'Puzzle',
@@ -107,7 +108,7 @@ export const actions = [
     images: imgBanio,
     description: 'Si necesitas ir al baño la opción a seleccionar es esta.',
     voz: 'Yo quiero ir al baño',
-    tipo: {
+    type: {
       opcion1: {
         id: 0,
         name: 'Del 1',
@@ -128,7 +129,7 @@ export const actions = [
     images: imgAsistente,
     description: 'Si lo que necesitas es ayuda del asistente medico, puedes elegir esta opción.',
     voz: 'Yo necesito ayuda',
-    tipo: {
+    type: {
       opcion1: {
         id: 0,
         name: 'Kinesióloga',
@@ -142,7 +143,7 @@ export const actions = [
         voz: 'Yo necesito ayuda de mi mamá',
       },
       opcion3: {
-        id: 1,
+        id: 2,
         name: 'Profesor',
         images: imgProfe,
         voz: 'Yo necesito ayuda del Profesor',
@@ -155,5 +156,10 @@ export const actions = [
     images: imgDormir,
     description: 'Si estas con sueño y quieres descansar está opción es la que debes elegir.',
     voz: 'Yo quiero dormir'
+  },
+  {
+    id: 6,
+    name: "Atrás",
+    images: imgBack,
   }
 ];

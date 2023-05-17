@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Help() {
   return (
-      <Link to={'/'}>
+      <Link to={'/home'}>
         <FaQuestion icon="fa-regular fa-square-question" className='text-white hover:opacity-25'/>
       </Link>
   )

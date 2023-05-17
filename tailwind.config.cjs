@@ -2,6 +2,11 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    extend: {
+      text: {
+        size: "100%",
+      },
+    },
     screens: {
       sm: "640px",
       md: "768px",
@@ -10,10 +15,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondary)',
+        primary: "var(--color-primary)",
+        secondary: "var(--color-secondary)",
         // ...
-      }
+      },
     },
 
     fontFamily: {
